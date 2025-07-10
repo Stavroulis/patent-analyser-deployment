@@ -1,0 +1,194 @@
+{
+    "Independent Claims": "claim 1 discloses an apparatus\nclaim 15 discloses a method\n",
+    "Ptbs": "Prob 1",
+    "Technical Effect": "techn. effect 1",
+    "Solution": "solution 1",
+    "Keywords": "",
+    "Classes": "",
+    "Unity": "",
+    "Remarks": "",
+    "Prior Art": "",
+    "Nr. Claims": "15",
+    "Appl. Image": "data\\EP1\\appl_image_EP1.png",
+    "Date": "08-07-2025",
+    "User Entered Claims": {
+        "Cl_1": "1. A helium leak detection apparatus for use with a container comprising a sealing member arranged to seal a first external access point, the apparatus comprising: a fitting configured to enclose at least a portion of the container; and a holder configured to hold the sealing member of the container in place when a differential pressure is applied across the sealing member.",
+        "Cl_2": "2. The apparatus of claim 1, wherein the differential pressure is applied by a vacuum at either a first side of the sealing member or a second side of the sealing member."
+    },
+    "Feature Table": {
+        "Cl_1": [
+            "A helium",
+            "a container",
+            "a sealing member",
+            "a first external access point",
+            "the apparatus",
+            "the container",
+            "the sealing member",
+            "the container",
+            "a differential pressure",
+            "the sealing member"
+        ],
+        "Cl_2": [
+            "The apparatus",
+            "The apparatus",
+            "the differential pressure",
+            "a vacuum",
+            "either a first side",
+            "the sealing member",
+            "a second side",
+            "the sealing member"
+        ]
+    },
+    "Edited Feature Table": {
+        "Cl_1": [
+            "A helium",
+            "a container",
+            "a sealing member",
+            "a first external access point",
+            "a differential pressure"
+        ],
+        "Cl_2": [
+            "a vacuum",
+            "either a first side",
+            "a second side"
+        ]
+    },
+    "Concatenated DataFrame": {
+        "a_list": [
+            "A helium",
+            "a container",
+            "a sealing member",
+            "a first external access point",
+            "a differential pressure",
+            "a vacuum",
+            "either a first side",
+            "a second side"
+        ],
+        "prep_list": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "the_list": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "Cl_nr": [
+            "Cl_1",
+            "Cl_1",
+            "Cl_1",
+            "Cl_1",
+            "Cl_1",
+            "Cl_2",
+            "Cl_2",
+            "Cl_2"
+        ]
+    },
+    "Network": {
+        "nodes": [
+            {
+                "id": "A helium",
+                "color": "red"
+            },
+            {
+                "id": "a container",
+                "color": "red"
+            },
+            {
+                "id": "a sealing member",
+                "color": "red"
+            },
+            {
+                "id": "a first external access point",
+                "color": "red"
+            },
+            {
+                "id": "a differential pressure",
+                "color": "red"
+            },
+            {
+                "id": "a vacuum",
+                "color": "orange"
+            },
+            {
+                "id": "either a first side",
+                "color": "orange"
+            },
+            {
+                "id": "a second side",
+                "color": "orange"
+            }
+        ],
+        "edges": [
+            {
+                "source": "A helium",
+                "target": "a sealing member",
+                "label": ""
+            },
+            {
+                "source": "a container",
+                "target": "a first external access point",
+                "label": ""
+            },
+            {
+                "source": "a sealing member",
+                "target": "a differential pressure",
+                "label": ""
+            },
+            {
+                "source": "a first external access point",
+                "target": "a vacuum",
+                "label": ""
+            },
+            {
+                "source": "a differential pressure",
+                "target": "either a first side",
+                "label": ""
+            },
+            {
+                "source": "a vacuum",
+                "target": "a second side",
+                "label": ""
+            }
+        ]
+    },
+    "Markers": {
+        "Combinations": [
+            "A helium",
+            "a container",
+            "a sealing member",
+            "a first external access point",
+            "a differential pressure",
+            "a vacuum",
+            "either a first side",
+            "a second side"
+        ],
+        "Heads": [
+            "A helium",
+            "a container"
+        ],
+        "Branches": {
+            "A helium": [
+                "10UG (A helium, a sealing member, a differential pressure, either a first side)",
+                "10UG (A helium, a sealing member, a differential pressure)",
+                "10UG (A helium, a sealing member)"
+            ],
+            "a container": [
+                "10UG (a container, a first external access point, a vacuum, a second side)",
+                "10UG (a container, a first external access point, a vacuum)",
+                "10UG (a container, a first external access point)"
+            ]
+        }
+    }
+}

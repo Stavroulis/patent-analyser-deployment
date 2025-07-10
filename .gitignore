@@ -1,0 +1,13 @@
+# Secrets and credentials
+.streamlit/secrets.toml
+credentials.json
+token.json
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments or OS clutter
+.venv/
+.DS_Store
+.env
