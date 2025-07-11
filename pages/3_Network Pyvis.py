@@ -6,6 +6,7 @@ from itertools import cycle
 from pyvis.network import Network
 import tempfile
 import json
+from utils import secure_filename
 
 # Color cycle for claims
 COLORS = ["red", "orange", "lime", "turquoise", "hotpink", "khaki", "blue",
@@ -17,7 +18,7 @@ if "filename" not in st.session_state:
     st.warning("No file selected. Please go to the main page.")
     st.stop()
 
-filename = st.session_state["filename"]
+filename = secure_filename(st.session_state["filename"])  # ✅ sanitize
 data = st.session_state.get("summary_data", {})
 json_path = Path(f"data/{filename}/Summary_{filename}.json")
 Path(f"data/{filename}").mkdir(parents=True, exist_ok=True)
