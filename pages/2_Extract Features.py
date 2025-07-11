@@ -4,6 +4,7 @@ import spacy
 import pandas as pd
 from pathlib import Path
 import json
+from utils import secure_filename 
 
 # --- Caching NLP model ---
 @st.cache_resource
@@ -17,11 +18,10 @@ if "filename" not in st.session_state:
     st.warning("No file selected. Please go to the main page.")
     st.stop()
 
-filename = st.session_state["filename"]
+filename = secure_filename(st.session_state["filename"])  # ✅ sanitize
 data = st.session_state.get("summary_data", {})
 json_path = Path(f"data/{filename}/Summary_{filename}.json")
 Path(f"data/{filename}").mkdir(parents=True, exist_ok=True)
-
 st.title(f"Automatic Features Extraction for {filename}")
 
 # --- Claims text area ---
