@@ -1,13 +1,9 @@
-"""
-utils.py
-
-Google Drive sync utilities — used ONLY by app.py for manual load and backup.
-
-NOTE: Local save/load is now handled within each page.
-"""
+# utils.py
 
 import json
 import io
+import re
+import unicodedata
 import streamlit as st
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -16,6 +12,18 @@ from googleapiclient.http import MediaIoBaseDownload, MediaIoBaseUpload
 
 SCOPES = ['https://www.googleapis.com/auth/drive.file']
 APP_FOLDER_NAME = "PatentAppData"
+
+# ✅ Secure filename generator
+def secure_filename(value: str, allow_uuid_suffix: bool = False) -> str:
+    import uuid
+    value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    value = re.sub(r"[^\w.\- ]", "", value)
+    value = re.sub(r"\s+", "_", value).strip("._")
+    if not value:
+        value = "file"
+    if allow_uuid_suffix:
+        value += f"_{uuid.uuid4().hex[:6]}"
+    return value
 
 @st.cache_resource(show_spinner="🔐 Authenticating with Google Drive...")
 def authenticate():
@@ -53,6 +61,7 @@ def get_or_create_folder(service):
     return folder['id']
 
 def upload_json_to_drive(filename, data):
+    filename = secure_filename(filename)
     if not isinstance(data, dict) or not data:
         st.error("❌ Cannot upload empty or invalid JSON data.")
         return
@@ -84,6 +93,7 @@ def upload_json_to_drive(filename, data):
         ).execute()
 
 def download_json_from_drive(filename):
+    filename = secure_filename(filename)
     service = authenticate()
     folder_id = get_or_create_folder(service)
     results = service.files().list(
