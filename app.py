@@ -1,9 +1,9 @@
-# ✅ Optimized Streamlit App Entrypoint (app.py)
+# app.py
+
 import streamlit as st
 import json
 from pathlib import Path
-from utils import load_from_drive, backup_to_drive
-
+from utils import load_from_drive, backup_to_drive, secure_filename
 
 # Set Streamlit page config
 st.set_page_config(page_title="Patent Summary Tool", layout="wide")
@@ -14,31 +14,20 @@ st.info("Navigate through the pages in the sidebar to edit claims, extract featu
 DATA_DIR = Path("data")
 DATA_DIR.mkdir(exist_ok=True)
 
-# Get existing filenames
-available_files = [f.name for f in DATA_DIR.iterdir() if f.is_dir()]
-available_files.sort()
-options = available_files + ["<Create New>"]
-
-# Pre-select existing file if present
+# File input (no longer listing everything)
 current_filename = st.session_state.get("filename", None)
-if current_filename in options:
-    index = options.index(current_filename)
-else:
-    index = len(options) - 1
+raw_input = st.text_input("Enter a new filename or reuse session one:", value=current_filename or "", placeholder="e.g., EP1234567")
 
-filename = st.selectbox("Select existing file or type a new one:", options, index=index)
+if not raw_input:
+    st.stop()
 
-if filename == "<Create New>":
-    filename = st.text_input("Enter a new filename:", placeholder="e.g., EP1234567")
-    if not filename:
-        st.stop()
-
-# Store filename
+filename = secure_filename(raw_input)
 st.session_state["filename"] = filename
-summary_path = Path("data") / filename / f"Summary_{filename}.json"
-(Path("data") / filename).mkdir(parents=True, exist_ok=True)
 
-# Load summary data from local file if exists
+summary_path = DATA_DIR / filename / f"Summary_{filename}.json"
+(DATA_DIR / filename).mkdir(parents=True, exist_ok=True)
+
+# Load local file
 if summary_path.exists():
     try:
         with open(summary_path, "r", encoding="utf-8") as f:
@@ -49,7 +38,7 @@ if summary_path.exists():
 else:
     st.session_state["summary_data"] = {}
 
-# Manual sync from Drive (optional backup)
+# Load from Google Drive
 if st.button("☁️ Load from Google Drive", use_container_width=True):
     try:
         data = load_from_drive(filename)
@@ -60,7 +49,7 @@ if st.button("☁️ Load from Google Drive", use_container_width=True):
     except Exception as e:
         st.error(f"❌ Failed to load from Drive: {e}")
 
-# Optional: download button
+# Download
 if st.session_state.get("summary_data"):
     json_str = json.dumps(st.session_state["summary_data"], indent=4, ensure_ascii=False)
     st.download_button(
@@ -71,7 +60,7 @@ if st.session_state.get("summary_data"):
         use_container_width=True
     )
 
-# Manual backup to Drive
+# Backup to Drive
 if st.button("📤 Backup to Google Drive", use_container_width=True):
     try:
         backup_to_drive(filename, st.session_state["summary_data"])
