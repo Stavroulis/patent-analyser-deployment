@@ -3,6 +3,7 @@ from pathlib import Path
 from PIL import Image
 from datetime import datetime
 import json
+from utils import secure_filename 
 
 # Configure Streamlit
 st.set_page_config(layout="wide")
@@ -12,7 +13,7 @@ if "filename" not in st.session_state:
     st.warning("No file selected. Please go to the main page.")
     st.stop()
 
-filename = st.session_state["filename"]
+filename = secure_filename(st.session_state["filename"])  # ✅ sanitize
 data = st.session_state.get("summary_data", {})
 
 st.title(f"General Information for {filename}")
