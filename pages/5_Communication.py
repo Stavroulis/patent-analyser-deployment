@@ -1,12 +1,13 @@
 import streamlit as st
 import re
+from utils import secure_filename 
 
 # --- Session Checks ---
 if "filename" not in st.session_state:
     st.warning("No file selected. Please go to the main page.")
     st.stop()
 
-filename = st.session_state["filename"]
+filename = secure_filename(st.session_state["filename"])  # ✅ sanitize
 data = st.session_state.get("summary_data", {})
 
 st.title(f"Citations for Claim 1 – {filename}")
