@@ -8,13 +8,14 @@ from PIL import Image
 from datetime import date
 from pathlib import Path
 import json
+from utils import secure_filename 
 
 # --- Session Check ---
 if "filename" not in st.session_state:
     st.warning("No file selected. Please go to the main page.")
     st.stop()
 
-filename = st.session_state["filename"]
+filename = secure_filename(st.session_state["filename"])  # ✅ sanitize
 directory = Path(f"data/{filename}")
 json_path = directory / f"Summary_{filename}.json"
 docx_filename = directory / f"Summary_{filename}.docx"
